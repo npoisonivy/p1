@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  RecordSoundsViewController.swift
 //  PitchPerfect_to_submit
 //
 //  Created by Nikki L on 8/26/16.
@@ -25,12 +25,29 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         // disable stopRecordingButton
         stopRecordingButton.enabled = false
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
+    // helper func
+    // put below under viewdidload...
+//    var recordButton.enabled = true,
+//        stopRecordButton.enabled = false,
+        // if stopRecording, then change both to opposite...
+
+
+//    func configureUI(recordAudio name: bool)){
+////         3 lines of codes
+//    switch(playState) {
+//        case .NotPlaying:
+//            recordButton.enabled = true
+//            stopRecordButton.enabled = false
+//        case .Playing:
+//            recordButton.enabled = false
+//            stopRecordButton.enabled = true
+//        }
+//    }
+
     
     // add IBAction for record button is pressed
     // link this action to button "Record Button" on Mainstoryboard
@@ -86,7 +103,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     
     override func viewWillAppear(animated: Bool) {
         print ("View will appear")
-
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -112,20 +128,9 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             let playSoundsVC = segue.destinationViewController as! PlaySoundsViewController
             let recordedAudioURL = sender as! NSURL
             playSoundsVC.recordedAudioURL = recordedAudioURL
-            
-            
         }
     }
-    
-    
-    
-
 }
-
-
-
-
-
 
 
 

@@ -17,6 +17,8 @@ class PlaySoundsViewController: UIViewController {
     @IBOutlet weak var rabbitButton: UIButton!
     @IBOutlet weak var snailButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var echoButton: UIButton!
+    @IBOutlet weak var reverbButton: UIButton!
     
     // add this block of code after extension file is added
     var recordedAudioURL: NSURL!     // need to assign recordedAudioURL - 
@@ -25,9 +27,9 @@ class PlaySoundsViewController: UIViewController {
     var audioPlayerNode: AVAudioPlayerNode!
     var stopTimer: NSTimer!
     
-    // tag- 0 is slow (snail), 1 is Fast (Rabbit), 2 is Chipmunk, 3 is Vader ...
+    // tag- 0 is slow (snail), 1 is Fast (Rabbit), 2 is Chipmunk, 3 is Vader, 4- echo, 5- reverb...
     // reality - 0 is chipmunk, 1 is Vader, 2 is Rabbit, 3 is snail.... -> so go to MSB and change the tag #
-    enum ButtonType: Int { case Slow = 0, Fast, Chipmunk, Vader}
+    enum ButtonType: Int { case Slow = 0, Fast, Chipmunk, Vader, Echo, Reverb}
     
     @IBAction func playSoundForButton(sender: UIButton) {
         print("Play sound button pressed")
@@ -41,6 +43,10 @@ class PlaySoundsViewController: UIViewController {
             playSound(pitch: 1000)
         case .Vader:
             playSound(pitch: -1000)
+        case .Echo:
+            playSound(echo: true)
+        case .Reverb:
+            playSound(reverb: true)
         }
         configureUI(.Playing)
     }
@@ -58,11 +64,6 @@ class PlaySoundsViewController: UIViewController {
         setupAudio()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     override func viewWillAppear(animated: Bool) {
         print("View will appear")
         configureUI(.NotPlaying) // disable stop btn + enable play btn
