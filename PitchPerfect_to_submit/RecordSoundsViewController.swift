@@ -24,44 +24,25 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         // disable stopRecordingButton
-        stopRecordingButton.enabled = false
-        
+        // stopRecordingButton.enabled = false
+        configureUI(isRecording: false)
     }
 
 
-    // helper func
-    // put below under viewdidload...
-//    var recordButton.enabled = true,
-//        stopRecordButton.enabled = false,
-        // if stopRecording, then change both to opposite...
-
-
-//    func configureUI(recordAudio name: bool)){
-////         3 lines of codes
-//    switch(playState) {
-//        case .NotPlaying:
-//            recordButton.enabled = true
-//            stopRecordButton.enabled = false
-//        case .Playing:
-//            recordButton.enabled = false
-//            stopRecordButton.enabled = true
-//        }
-//    }
+    // when it's recording or not, do below
+    func configureUI(isRecording isRecording: Bool){
+        recordingLabel.text = isRecording ? "Recording in progress": "Tap to Record"
+        recordButton.enabled = !isRecording  // when recording, disable recordButton
+        stopRecordingButton.enabled = isRecording // when recording, enable stopRecording button
+    }
 
     
     // add IBAction for record button is pressed
     // link this action to button "Record Button" on Mainstoryboard
     @IBAction func recordAudio(sender: AnyObject) {
         print ("Record button is clicked")
-        // change Recording label text to "Recording in progress
-        recordingLabel.text = "Recording in progress"
-        
-        // disable recordButton
-        recordButton.enabled = false
-        
-        // enable stopRecordingButton
-        stopRecordingButton.enabled = true
-        
+
+        configureUI(isRecording: true)
         
         // When record button is pressed, need to set up filePath, for audioRecorder to start recording
         let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -86,14 +67,11 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     // add IBAction for stop recording Button
     @IBAction func stopRecording(sender: AnyObject) {
         print("stop Recording button is pressed")
+
+        configureUI(isRecording: false)
         // enable recordButton
-        recordButton.enabled = true
-        
         // disable stopRecordingButton
-        stopRecordingButton.enabled = false
-        
         // change recordingLabel.text to "Tap to record"
-        recordingLabel.text = "Tap to record"
         
         // use AVAudioRecorder func to stop Hardware from recording
         audioRecorder.stop()
